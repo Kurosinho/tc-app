@@ -2,20 +2,18 @@ package tree
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
-	"os"
 )
 
-type classes struct {
+type TcClasses struct {
 	Classes []class `json:"classes"`
 }
 
-type filters struct {
+type TcFilters struct {
 	Filters []filter `json:"filters"`
 }
 
-type qdiscs struct {
+type TcQdiscs struct {
 	Qdiscs []qdisc `json:"qdiscs"`
 }
 
@@ -49,6 +47,11 @@ type qdisc struct {
 	Handle string `json:"handle"`
 }
 
+var root rootHtb
+var classes TcClasses
+var filters TcFilters
+var qdiscs TcQdiscs
+
 func rootQdisc(root rootHtb) []string {
 	var rootclass []string
 	if root.Cloud {
@@ -61,7 +64,7 @@ func rootQdisc(root rootHtb) []string {
 	return rootclass
 }
 
-func writeClasses(classes classes) []string {
+func writeClasses(classes TcClasses) []string {
 	var clss []string
 	for _, class := range classes.Classes {
 		cls := "tc class add dev " + class.Dev + " parent " + class.Parent + " classid " + class.Id + " htb rate " + class.Rate + " ceil " + class.Ceiling
@@ -70,7 +73,7 @@ func writeClasses(classes classes) []string {
 	return clss
 }
 
-func writeFilters(filters filters) []string {
+func writeFilters(filters TcFilters) []string {
 	var fltrs []string
 	for _, filter := range filters.Filters {
 		fltr := "tc filter add dev " + filter.Dev + " protocol ip parent 1: prio " + filter.Prio + " u32 match ip dst " + filter.Ip + " match ip dport " + filter.Dport + " 0xffff flowid " + filter.Flowid
@@ -79,7 +82,7 @@ func writeFilters(filters filters) []string {
 	return fltrs
 }
 
-func writeQdiscs(qdiscs qdiscs) []string {
+func writeQdiscs(qdiscs TcQdiscs) []string {
 	var qdscs []string
 	for _, qdisc := range qdiscs.Qdiscs {
 		qdsc := "tc qdisc add dev " + qdisc.Dev + " parent " + qdisc.Parent + " handle " + qdisc.Handle + ": sfq perturb 10"
@@ -88,18 +91,9 @@ func writeQdiscs(qdiscs qdiscs) []string {
 	return qdscs
 }
 
-func Build() {
-	tree, err := os.ReadFile("mock.json")
-	if err != nil {
-		log.Fatal(err)
-	}
+func Build(tree []byte) []string {
 
-	var root rootHtb
-	var classes classes
-	var filters filters
-	var qdiscs qdiscs
-
-	err = json.Unmarshal(tree, &root)
+	err := json.Unmarshal(tree, &root)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -121,16 +115,19 @@ func Build() {
 	filter := writeFilters(filters)
 	qdisc := writeQdiscs(qdiscs)
 
+	var response []string
+
 	for _, i := range rootqdisc {
-		fmt.Println(i)
+		response = append(response, i)
 	}
 	for _, i := range class {
-		fmt.Println(i)
+		response = append(response, i)
 	}
 	for _, i := range filter {
-		fmt.Println(i)
+		response = append(response, i)
 	}
 	for _, i := range qdisc {
-		fmt.Println(i)
+		response = append(response, i)
 	}
+	return response
 }
