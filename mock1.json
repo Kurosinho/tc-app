@@ -1,0 +1,70 @@
+{
+    "dev": "eth1",
+    "dft": "2",
+    "cloud": true,
+    "rate": "25mbps",
+    "ceiling": "25mbps",
+    "classes": [
+        {
+            "dev": "eth1",
+            "parent": "1:1",
+            "id": "1:2",
+            "rate": "8mbps",
+            "ceiling": "25mbps"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:1",
+            "id": "1:4",
+            "rate": "17mbps",
+            "ceiling": "25mbps"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:4",
+            "id": "1:41",
+            "rate": "10mbps",
+            "ceiling": "25mbps"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:4",
+            "id": "1:42",
+            "rate": "7mbps",
+            "ceiling": "25mbps"
+        }
+    ],
+    "filters": [
+        {
+            "dev": "eth1",
+            "prio": "1",
+            "ip": "10.3.0.2",
+            "dport": "2000",
+            "flowid": "41"
+        },
+        {
+            "dev": "eth1",
+            "prio": "2",
+            "ip": "10.3.0.2",
+            "dport": "1000",
+            "flowid": "42"
+        }
+    ],
+    "qdiscs": [
+        {
+            "dev": "eth1",
+            "parent": "1:2",
+            "handle": "20"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:41",
+            "handle": "410"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:42",
+            "handle": "420"
+        }
+    ]
+}

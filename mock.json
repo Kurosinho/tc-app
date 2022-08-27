@@ -1,0 +1,63 @@
+{
+    "dev": "eth1",
+    "dft": "5",
+    "cloud": false,
+    "rate": "15mbps",
+    "ceiling": "15mbps",
+    "classes": [
+        {
+            "dev": "eth1",
+            "parent": "1:1",
+            "id": "1:3",
+            "rate": "7mbps",
+            "ceiling": "15mbps"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:1",
+            "id": "1:5",
+            "rate": "3mbps",
+            "ceiling": "15mbps"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:1",
+            "id": "1:7",
+            "rate": "5mbps",
+            "ceiling": "15mbps"
+        }
+    ],
+    "filters": [
+        {
+            "dev": "eth1",
+            "prio": "1",
+            "ip": "10.3.0.2",
+            "dport": "5000",
+            "flowid": "3"
+        },
+        {
+            "dev": "eth1",
+            "prio": "2",
+            "ip": "10.3.0.2",
+            "dport": "5200",
+            "flowid": "7"
+        }
+    ],
+    "qdiscs": [
+        {
+            "dev": "eth1",
+            "parent": "1:3",
+            "handle": "13"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:5",
+            "handle": "15"
+        },
+        {
+            "dev": "eth1",
+            "parent": "1:7",
+            "handle": "17"
+        }
+    ]
+}
