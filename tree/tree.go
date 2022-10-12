@@ -51,6 +51,7 @@ var root rootHtb
 var classes TcClasses
 var filters TcFilters
 var qdiscs TcQdiscs
+var response []string
 
 func rootQdisc(root rootHtb) []string {
 	var rootclass []string
@@ -115,19 +116,10 @@ func Build(tree []byte) []string {
 	filter := writeFilters(filters)
 	qdisc := writeQdiscs(qdiscs)
 
-	var response []string
+	response = append(response, rootqdisc...)
+	response = append(response, class...)
+	response = append(response, filter...)
+	response = append(response, qdisc...)
 
-	for _, i := range rootqdisc {
-		response = append(response, i)
-	}
-	for _, i := range class {
-		response = append(response, i)
-	}
-	for _, i := range filter {
-		response = append(response, i)
-	}
-	for _, i := range qdisc {
-		response = append(response, i)
-	}
 	return response
 }
