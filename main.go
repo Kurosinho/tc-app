@@ -40,6 +40,7 @@ func main() {
 	router := gin.Default()
 	router.Static("/styles", "./styles/")
 	router.Static("/images", "./images/")
+	router.Static("/scripts", "./scripts/")
 	router.LoadHTMLGlob("templates/*.html")
 	router.GET("/", index)
 	router.GET("/generator", generator)
