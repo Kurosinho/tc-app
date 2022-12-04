@@ -1,4 +1,4 @@
-function make_json() {
+async function make_json() {
     var dev = document.getElementsByName("dev")[0].value
     var dft = document.getElementsByName("dft")[0].value
     var root_rate = document.getElementsByName("rt")[0].value
@@ -12,6 +12,11 @@ function make_json() {
     var ids = document.querySelectorAll('input[name^=id]')
     var rates = document.querySelectorAll('input[name^=rate]')
     var ceilings = document.querySelectorAll('input[name^=ceiling]')
+
+    var prios = document.querySelectorAll('input[name^=prio]')
+    var ips = document.querySelectorAll('input[name^=ip]')
+    var dports = document.querySelectorAll('input[name^=dport')
+    var flowids = document.querySelectorAll('input[name^=flowid')
 
     var tc_tree = {};
     tc_tree['classes'] = [];
@@ -31,24 +36,43 @@ function make_json() {
         tc_tree.classes[i]['id'] = ids[i].value;
         tc_tree.classes[i]['rate'] = rates[i].value;
         tc_tree.classes[i]['ceiling'] = ceilings[i].value;
+
+        tc_tree.qdiscs.push({});
+        tc_tree.qdiscs[i]['dev'] = dev;
+        tc_tree.qdiscs[i]['parent'] = ids[i].value.slice(-1);
+        tc_tree.qdiscs[i]['handle'] = "1" + ids[i].value.slice(-1);
     }
 
-
-
-    console.log(classes);
-    parents.forEach((parent) => {
-        console.log(parent.value);
-    })
-
-
+    for (let i = 0; i < filters.length; i++) {
+        tc_tree.filters.push({});
+        tc_tree.filters[i]['dev'] = dev;
+        tc_tree.filters[i]['prio'] = prios[i].value;
+        tc_tree.filters[i]['ip'] = ips[i].value;
+        tc_tree.filters[i]['dport'] = dports[i].value;
+        tc_tree.filters[i]['flowid'] = flowids[i].value;
+    }
     console.log(tc_tree);
-    // classes.forEach((classe) => {
-    //     document.get
-    // })
-}
 
-function submit() {
-    var jsonData = ('div').serializeArray();
-    var jsonString = JSON.stringify(jsonData);
-    console.log(jsonString);
+    let url = 'http://localhost:8888/build';
+
+    let res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tc_tree)
+    });
+
+    if (res.ok) {
+        let ret = await res.json();
+        console.log(ret);
+        var result = document.getElementById("results");
+        result.innerHTML += ret.data;
+        return ret.data;
+    } else {
+        return `HTTP error: ${res.status}`;
+    }
+    
+    
+
 }

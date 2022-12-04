@@ -207,7 +207,7 @@ function add_subfilter(div_name) {
 
     var flowid = document.createElement("input");
     flowid.setAttribute("type", "text");
-    flowid.setAttribute("name", "flowid");
+    flowid.setAttribute("name", "flowid" + no_of_filter);
     flowid.setAttribute("class", "border py-2 px-3 text-black md:mr-2")
 
     flowid_div.append(flowid_label);
