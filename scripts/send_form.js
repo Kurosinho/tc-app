@@ -6,7 +6,7 @@ async function make_json() {
     var cloud = document.getElementById("cloud_input").checked
 
     var classes = document.querySelectorAll('div[name^=clss]')
-    var filters = document.getElementsByName("filter")
+    var filters = document.querySelectorAll('div[name^=filter')
 
     var parents = document.querySelectorAll('input[name^=parent]')
     var ids = document.querySelectorAll('input[name^=id]')
@@ -17,17 +17,19 @@ async function make_json() {
     var ips = document.querySelectorAll('input[name^=ip]')
     var dports = document.querySelectorAll('input[name^=dport')
     var flowids = document.querySelectorAll('input[name^=flowid')
+    var div = document.getElementById('results');
 
     var tc_tree = {};
-    tc_tree['classes'] = [];
-    tc_tree['filters'] = [];
-    tc_tree['qdiscs'] = [];
-
     tc_tree.dev = dev;
     tc_tree.dft = dft;
     tc_tree.cloud = cloud;
     tc_tree.rate = root_rate;
     tc_tree.ceiling = cln;
+
+    tc_tree['classes'] = [];
+    tc_tree['filters'] = [];
+    tc_tree['qdiscs'] = [];
+
 
     for (let i = 0; i < classes.length; i++) {
         tc_tree.classes.push({});
@@ -64,15 +66,23 @@ async function make_json() {
     });
 
     if (res.ok) {
-        let ret = await res.json();
-        console.log(ret);
-        var result = document.getElementById("results");
-        result.innerHTML += ret.data;
-        return ret.data;
+        res.json().then(data => {
+            var trees = data.response;
+            trees.forEach(tree => {
+                var ret = document.createElement('div');
+                ret.setAttribute("class", "flex justify-center");
+                ret.innerHTML = tree
+                div.append(ret);
+            });
+            console.log(data);
+        });
+        return rets.data;
     } else {
         return `HTTP error: ${res.status}`;
     }
-    
-    
+}
+
+function rets(ret) {
+
 
 }

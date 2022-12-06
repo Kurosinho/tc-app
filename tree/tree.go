@@ -51,7 +51,6 @@ var root rootHtb
 var classes TcClasses
 var filters TcFilters
 var qdiscs TcQdiscs
-var response []string
 
 func rootQdisc(root rootHtb) []string {
 	var rootclass []string
@@ -93,6 +92,7 @@ func writeQdiscs(qdiscs TcQdiscs) []string {
 }
 
 func Build(tree []byte) []string {
+	var response []string
 
 	err := json.Unmarshal(tree, &root)
 	if err != nil {
