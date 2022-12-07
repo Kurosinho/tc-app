@@ -81,8 +81,3 @@ async function make_json() {
         return `HTTP error: ${res.status}`;
     }
 }
-
-function rets(ret) {
-
-
-}
