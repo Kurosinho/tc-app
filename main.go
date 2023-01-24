@@ -46,5 +46,5 @@ func main() {
 	router.GET("/generator", generator)
 	router.GET("/docs", documentation)
 	router.POST("/build", buildTree)
-	router.Run("localhost:8888")
+	router.Run("0.0.0.0:8888")
 }
