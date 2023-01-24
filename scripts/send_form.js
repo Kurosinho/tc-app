@@ -6,7 +6,8 @@ async function make_json() {
     var cloud = document.getElementById("cloud_input").checked
 
     var classes = document.querySelectorAll('div[name^=clss]')
-    var filters = document.querySelectorAll('div[name^=filter')
+    var filters = document.querySelectorAll('div[name^=filter]')
+    var qdiscs = document.querySelectorAll('div[name^=clss-s]')
 
     var parents = document.querySelectorAll('input[name^=parent]')
     var ids = document.querySelectorAll('input[name^=id]')
@@ -38,7 +39,9 @@ async function make_json() {
         tc_tree.classes[i]['id'] = ids[i].value;
         tc_tree.classes[i]['rate'] = rates[i].value;
         tc_tree.classes[i]['ceiling'] = ceilings[i].value;
+    }
 
+    for (let i = 0; i < qdiscs.length; i++) {
         tc_tree.qdiscs.push({});
         tc_tree.qdiscs[i]['dev'] = dev;
         tc_tree.qdiscs[i]['parent'] = ids[i].value.slice(-1);

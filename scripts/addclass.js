@@ -3,7 +3,7 @@ var no_of_filter = 0;
 function add_class() {
     var outside_div = document.createElement("div");
     outside_div.setAttribute("class", "flex flex-col place-content-center justify-center px-6");
-    outside_div.setAttribute("name", "clss-" + no_of_class);
+    outside_div.setAttribute("name", "clss-s-" + no_of_class);
     outside_div.setAttribute("id", "class-" + no_of_class);
 
     var inside_div = document.createElement("div");
@@ -171,7 +171,7 @@ function add_subfilter(div_name) {
     var ip_label = document.createElement("label");
     ip_label.setAttribute("class", "mb-2 font-bold tracking-wide uppercase text-gray-800");
     ip_label.setAttribute("for", "ip");
-    ip_label.innerHTML = "source ip";
+    ip_label.innerHTML = "destination ip";
 
     var ip = document.createElement("input");
     ip.setAttribute("type", "text");
@@ -187,7 +187,7 @@ function add_subfilter(div_name) {
     var dport_label = document.createElement("label");
     dport_label.setAttribute("class", "mb-2 font-bold tracking-wide uppercase text-gray-800");
     dport_label.setAttribute("for", "dport");
-    dport_label.innerHTML = "ingress port";
+    dport_label.innerHTML = "eagress port";
 
     var dport = document.createElement("input");
     dport.setAttribute("type", "text");
@@ -230,10 +230,11 @@ function add_subfilter(div_name) {
 function add_subclass(div_name) {
     document.getElementsByName(div_name)[1].disabled = true;
     document.getElementsByName(div_name)[1].setAttribute("class", "bg-red-100 cursor-not-allowed inline-block font-medium uppercase shadow-md rounded p-4 flex-col items-center");
+    document.getElementById(div_name).setAttribute("name", "clss-" + no_of_class);
 
     var outside_div = document.createElement("div");
     outside_div.setAttribute("class", "flex flex-col justify-center py-6");
-    outside_div.setAttribute("name", "clss-" + no_of_class);
+    outside_div.setAttribute("name", "clss-s-" + no_of_class);
     outside_div.setAttribute("id", "class-" + no_of_class);
 
     var clss = document.createElement("div");
@@ -392,7 +393,7 @@ function add_filter(div_name) {
     var ip_label = document.createElement("label");
     ip_label.setAttribute("class", "mb-2 font-bold tracking-wide uppercase text-gray-800");
     ip_label.setAttribute("for", "ip");
-    ip_label.innerHTML = "source ip";
+    ip_label.innerHTML = "destination ip";
 
     var ip = document.createElement("input");
     ip.setAttribute("type", "text");
@@ -408,7 +409,7 @@ function add_filter(div_name) {
     var dport_label = document.createElement("label");
     dport_label.setAttribute("class", "mb-2 font-bold tracking-wide uppercase text-gray-800");
     dport_label.setAttribute("for", "dport");
-    dport_label.innerHTML = "ingress port";
+    dport_label.innerHTML = "eagress port";
 
     var dport = document.createElement("input");
     dport.setAttribute("type", "text");
