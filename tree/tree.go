@@ -76,7 +76,7 @@ func writeClasses(classes TcClasses) []string {
 func writeFilters(filters TcFilters) []string {
 	var fltrs []string
 	for _, filter := range filters.Filters {
-		fltr := "tc filter add dev " + filter.Dev + " protocol ip parent 1: prio " + filter.Prio + " u32 match ip dst " + filter.Ip + " match ip dport " + filter.Dport + " 0xffff flowid " + filter.Flowid
+		fltr := "tc filter add dev " + filter.Dev + " protocol ip parent 1: prio " + filter.Prio + " u32 match ip dst " + filter.Ip + " match ip dport " + filter.Dport + " 0xffff flowid 1:" + filter.Flowid
 		fltrs = append(fltrs, fltr)
 	}
 	return fltrs
@@ -85,7 +85,7 @@ func writeFilters(filters TcFilters) []string {
 func writeQdiscs(qdiscs TcQdiscs) []string {
 	var qdscs []string
 	for _, qdisc := range qdiscs.Qdiscs {
-		qdsc := "tc qdisc add dev " + qdisc.Dev + " parent " + qdisc.Parent + " handle " + qdisc.Handle + ": sfq perturb 10"
+		qdsc := "tc qdisc add dev " + qdisc.Dev + " parent 1:" + qdisc.Parent + " handle " + qdisc.Handle + ": sfq perturb 10"
 		qdscs = append(qdscs, qdsc)
 	}
 	return qdscs
