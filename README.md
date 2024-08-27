@@ -1,4 +1,5 @@
-# TC App
+### Assissted Traffic Control - ATC
 
-Aplikacja wspierająca wdrażanie traffic control na serwerze aplikacyjnym
+# What is it?
+Application for generating scripts for `tc` module which is used for Traffic Control in the Linux kernel. 
 
