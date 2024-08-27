@@ -14,7 +14,10 @@ func buildTree(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	newTree := tree.Build(treeData)
+	newTree, err := tree.Build(treeData)
+	if err != nil {
+		log.Fatal(err)
+	}
 	c.JSON(200, gin.H{"response": newTree})
 }
 
